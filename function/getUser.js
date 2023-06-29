@@ -29,6 +29,10 @@ const getUser = async (discordId, data) => {
       user.amount = 0;
       await client.set(discordId, JSON.stringify(user));
       await client.disconnect();
+      return {
+        status: 200,
+        amount: user.amount,
+      }
     }
     await client.disconnect();
     return {
