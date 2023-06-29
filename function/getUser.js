@@ -27,6 +27,7 @@ const getUser = async (discordId, data) => {
     } else {
       console.log("resetting");
       user.amount = 0;
+      user["date-time"] = new Date().toISOString();
       await client.set(discordId, JSON.stringify(user));
       await client.disconnect();
       return {
