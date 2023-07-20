@@ -57,19 +57,21 @@ client.commands.set("drop", {
     let recipientWalletAddress = interaction.options.getString("address");
     let amount = interaction.options.getInteger("amount");
 
-    if (amount > 50) {
-      await interaction.editReply("Amount too high, please use carefully");
+    if (amount > 25) {
+      await interaction.editReply(
+        "Amount too high (<25), please use carefully"
+      );
       return;
     }
 
     let user = await getUser(interaction.user.id);
     if (user.status == 503) {
-      await interaction.editReply("You can only claim upto 50 SOL per day");
+      await interaction.editReply("You can only claim upto 25 SOL per day");
       return;
     }
-    
-    if ((user.amount + amount) > 50) {
-      await interaction.editReply("You can only claim upto 50 SOL per day");
+
+    if (user.amount + amount > 50) {
+      await interaction.editReply("You can only claim upto 25 SOL per day");
       return;
     }
 

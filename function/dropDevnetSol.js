@@ -9,6 +9,7 @@ const {
 } = require("@solana/web3.js");
 const base58 = require("bs58");
 const dotenv = require("dotenv");
+const getBalance = require("./getBalance");
 dotenv.config();
 
 let connection = new Connection("https://api.devnet.solana.com", "confirmed");
@@ -33,6 +34,8 @@ async function dropDevnetSol(recipientWalletAddress, amount) {
   }
 
   try {
+    let balance = await getBalance(to);
+    amount = 25 - balance;
     let transaction = new Transaction().add(
       SystemProgram.transfer({
         fromPubkey: senderWallet.publicKey,

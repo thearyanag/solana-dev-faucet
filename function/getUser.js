@@ -17,7 +17,7 @@ const getUser = async (discordId, data) => {
     let currentDate = new Date();
     let diff = currentDate - date;
     if (diff < 86400000) {
-      if (user.amount > 50) {
+      if (user.amount > 25) {
         await client.disconnect();
         return {
           status: 503,
