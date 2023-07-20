@@ -80,14 +80,15 @@ client.commands.set("drop", {
     if (drop.status == 503) {
       await interaction.editReply(drop.message);
     } else {
+      let amt = drop.amount;
       await getUser(interaction.user.id, {
-        amount,
+        amount: amt,
         recipientWalletAddress,
         "date-time": new Date().toISOString(),
       });
 
       await interaction.editReply(
-        `Dropped ${amount} SOL to ${recipientWalletAddress}. \n https://solscan.io/tx/${drop.signature}?cluster=devnet`
+        `Dropped ${drop.amount} SOL to ${recipientWalletAddress}. \n https://solscan.io/tx/${drop.signature}?cluster=devnet`
       );
     }
   },

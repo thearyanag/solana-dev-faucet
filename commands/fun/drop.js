@@ -5,7 +5,7 @@ const dropDevnetSol = require("../../function/dropDevnetSol");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("drop")
-    .setDescription("Drops devnet SOL to the provided address")
+    .setDescription("Drops devnet SOL(<25) to the provided address")
     .addStringOption((option) =>
       option
         .setName("address")
@@ -27,11 +27,11 @@ module.exports = {
     let amount = interaction.options.getInteger("amount");
     let user = await getUser(interaction.user.id);
     if(user.status == 503) {
-      await interaction.editReply("You can only claim upto 50 SOL per day");
+      await interaction.editReply("You can only claim upto 25 SOL per day");
       return;
     } 
     if(user.amount + amount > 50) {
-      await interaction.editReply("You can only claim upto 50 SOL per day");
+      await interaction.editReply("You can only claim upto 25 SOL per day");
       return;
     }
     let drop = await dropDevnetSol(recipientWalletAddress, amount);

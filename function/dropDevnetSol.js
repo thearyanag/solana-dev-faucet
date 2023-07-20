@@ -35,12 +35,13 @@ async function dropDevnetSol(recipientWalletAddress, amount) {
 
   try {
     let balance = await getBalance(to);
-    amount = 25 - balance;
+    amount = amount + balance > 25 ? 25 - balance : amount;
+    amount = Math.round(amount)
     let transaction = new Transaction().add(
       SystemProgram.transfer({
         fromPubkey: senderWallet.publicKey,
         toPubkey: to,
-        lamports: LAMPORTS_PER_SOL * amount,
+        lamports: (LAMPORTS_PER_SOL * amount)
       })
     );
 
@@ -51,9 +52,11 @@ async function dropDevnetSol(recipientWalletAddress, amount) {
     let transfer_trx = signature;
     console.log(transfer_trx);
     return {
+      amount,
       signature: transfer_trx,
     };
   } catch (error) {
+    console.log(error);
     return {
       status: 503,
       message: "Insufficient balance, please ping 0xaryan to refil the faucet",
